@@ -12,7 +12,10 @@ In Catania (Italy) the day 2020-12-04 , min temp is 10.1 ,max temp is 16.3 with 
 ```
 > **Note:** the project requires the following modules to run: *json, urllib*.
 
-A user can choose an Italian city and the day they need the forecast for. The input day is an integer with possible values between 1 and 16; it means we are searching for weather information for the n-day, counting from today (day=1 is today, day=2 is tomorrow, and so on).
+A user can choose an Italian city and the day they need the forecast for. The city is selected using a function which pulls the chosen location from a csv file containing every Italian town. The input day is an integer with possible values between 1 and 16; it means we are searching for weather information for the n-day, counting from today (day=1 is today, day=2 is tomorrow, and so on).
+
+
+
 ### References :green_book:
 The API we use is offered by [Weatherbit API](https://www.weatherbit.io/api). With a premium account there is the possibilty to use other specific features. 
 
