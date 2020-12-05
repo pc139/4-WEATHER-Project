@@ -1,5 +1,8 @@
 import weather_functions
+import csv_manager
 import argparse
+
+city_list_path="data/comuni_italiani.csv"
 
 def parse_arguments():
     parser=argparse.ArgumentParser(
@@ -25,23 +28,13 @@ def parse_arguments():
 
 if __name__ == "__main__":
     args = parse_arguments()
-    temps = weather_functions.min_max_day(args.city, args.country, args.day)
-
-    if args.quiet:
-        print (temps)
-    elif args.verbose:
-        print ("Weather information: ", temps)
-
-
-
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    temps = weather_functions.min_max_day("Catania", "Italy", 1)
-    print(temps)
+    if csv_manager.csv_city_check(city_list_path, args.city):
+        temps = weather_functions.min_max_day(args.city, args.country, args.day)
+        if args.quiet:
+            print(temps)
+        elif args.verbose:
+            print("Weather information: ", temps)
+        else:
+            print("Weather info: ", temps)
+    else:
+        print("The chosen city does not exist")
