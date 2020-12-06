@@ -29,7 +29,7 @@ def parse_arguments():
 if __name__ == "__main__":
     args = parse_arguments()
     if csv_manager.csv_city_check(city_list_path, args.city):
-        temps = weather_functions.min_max_day(args.city, args.country, args.day)
+        temps, lat, lon = weather_functions.min_max_day(args.city, args.country, args.day)
         if args.quiet:
             print(temps)
         elif args.verbose:

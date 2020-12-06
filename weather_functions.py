@@ -16,4 +16,4 @@ def min_max_day(city, country, day):
             + " , min temp is " +str(js["data"][day-1]["min_temp"])
             + " ,max temp is " + str(js["data"][day-1]["max_temp"]) + " with "
             + str(js["data"][day-1]["weather"]["description"].lower()))
-    return w_info
+    return w_info, js["lat"], js["lon"]
