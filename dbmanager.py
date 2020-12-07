@@ -31,9 +31,9 @@ def create_new_user(username, password, api_key):
     global conn
     global cursor
     salt = random.randint(1, 100)
-    password = str(salt) + password
-    #password = password.encode('utf-8')
-    digest = hashlib.sha512().hexdigest()
+    digest = str(salt) + password
+    for i in range(1000000):
+        digest = hashlib.sha512(digest.encode('utf-8')).hexdigest()
     # if the user already exists, replace its password and salt
     cursor.execute("INSERT OR REPLACE INTO users VALUES (?,?,?,?)",
                    (username, digest, api_key, salt))
@@ -58,9 +58,9 @@ def check_for_username(username, password):
     conn.commit()
     results = rows.fetchall()
     # get the salt and prepend to the password before computing the digest
-    password = str(results[0][3]) + password
-    #password = password.encode('utf-8')
-    digest = hashlib.sha512().hexdigest()
+    digest = str(results[0][3]) + password
+    for i in range(1000000):
+        digest = hashlib.sha512(digest.encode('utf-8')).hexdigest()
     # if the digest in the database is equal to the computed digest ALLOW
     if digest == results[0][1].lower():
         return True
