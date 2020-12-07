@@ -21,11 +21,12 @@ def open_and_create(db_path):
         cursor.execute('''CREATE TABLE users
                        (username VARCHAR(255) NOT NULL,
                         password VARCHAR(255) NOT NULL,
+                        api_key VARCHAR(255) NOT NULL,
                         salt SMALLINT NOT NULL,
                         PRIMARY KEY (username))''')
 
 
-def create_new_user(username, password):
+def create_new_user(username, password, api_key):
 
     global conn
     global cursor
@@ -34,8 +35,8 @@ def create_new_user(username, password):
     #password = password.encode('utf-8')
     digest = hashlib.sha512().hexdigest()
     # if the user already exists, replace its password and salt
-    cursor.execute("INSERT OR REPLACE INTO users VALUES (?,?,?)",
-                   (username, digest, salt))
+    cursor.execute("INSERT OR REPLACE INTO users VALUES (?,?,?,?)",
+                   (username, digest, api_key, salt))
     conn.commit()
 
 
@@ -57,7 +58,7 @@ def check_for_username(username, password):
     conn.commit()
     results = rows.fetchall()
     # get the salt and prepend to the password before computing the digest
-    password = str(results[0][2]) + password
+    password = str(results[0][3]) + password
     #password = password.encode('utf-8')
     digest = hashlib.sha512().hexdigest()
     # if the digest in the database is equal to the computed digest ALLOW
@@ -66,9 +67,20 @@ def check_for_username(username, password):
     else:
         return False
 
+def get_api_key(username, password):
+
+    global conn
+    global cursor
+    rows = cursor.execute("SELECT * FROM users WHERE username=?",
+                          (username,))
+    conn.commit()
+    results = rows.fetchall()
+    api_key = results[0][2]
+    return api_key
+
 
 def parse_arguments():
-    
+
     parser = argparse.ArgumentParser(
             description="Manage actions as add/remove user",
             prog="weather_info",
@@ -89,6 +101,8 @@ def parse_arguments():
                         required=True, default=None)
     parser.add_argument('-p', help="user password",
                         required=True, default=None)
+    parser.add_argument('-a', help="user api_key",
+                        required=True, default=None)
 
     parser.add_argument("--version",
                         action="version",
@@ -98,7 +112,7 @@ def parse_arguments():
 
 
 if __name__ == "__main__":
-    path = 'data/database.db'
+    path = 'Data/database.db'
     open_and_create(path)
     args = parse_arguments()
     # if the users wants to add and remove a user at the same time DENY
@@ -106,10 +120,10 @@ if __name__ == "__main__":
         print("It is not possible to add and remove a user at the same time!")
     elif args.add:
         # if there is one argument missing (username, password or both) DENY
-        if args.u is None or args.p is None:
+        if args.u is None or args.p is None or args.a is None:
             print("Something is missing, provide proper data!")
         else:
-            create_new_user(args.u, args.p)
+            create_new_user(args.u, args.p, args.a)
             print("Successfully inserted user {}".format(args.u))
     elif args.rm:
         remove_username(args.u)

@@ -41,8 +41,9 @@ if __name__ == "__main__":
     # If the user is authenticated proceed:
     try:
         if db.check_for_username(args.u, args.p):
-            if csv_manager.csv_city_check(dataset_path,args.city):
-                temps, lat, lon = weather.min_max_day(args.city, args.country, args.day)
+            api_key = db.get_api_key(args.u, args.p)
+            if csv_manager.csv_city_check(city_list_path,args.city):
+                temps, lat, lon = weather_functions.min_max_day(api_key, args.city, args.country, args.day)
                 if args.quiet:
                     print (temps)
                 elif args.verbose:
