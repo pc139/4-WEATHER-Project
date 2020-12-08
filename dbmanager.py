@@ -78,6 +78,17 @@ def get_api_key(username, password):
     api_key = results[0][2]
     return api_key
 
+def display_all_users():
+
+    global conn
+    global cursor
+    rows = cursor.execute("SELECT username FROM users")
+    conn.commit()
+    results = rows.fetchall()
+
+    print("Users: ")
+    for row in results:
+        print(row[0])
 
 def parse_arguments():
 
@@ -96,13 +107,18 @@ def parse_arguments():
                         help="Remove user",
                         required=False, default=False,
                         action="store_true")
+    # command to display all users
+    parser.add_argument("-ds",
+                        help="Display users",
+                        required=False, default=False,
+                        action="store_true")
     # user credentials
     parser.add_argument('-u', help="user username (requires -p)",
                         required=True, default=None)
     parser.add_argument('-p', help="user password",
                         required=True, default=None)
     parser.add_argument('-a', help="user api_key",
-                        required=True, default=None)
+                        required=False, default=None)
 
     parser.add_argument("--version",
                         action="version",
@@ -128,5 +144,9 @@ if __name__ == "__main__":
     elif args.rm:
         remove_username(args.u)
         print("Successfully removed user {}".format(args.u))
+    elif args.ds:
+        if args.u == "admin":
+            if check_for_username(args.u, args.p):
+                display_all_users() 
     else:
         print("Choose -add to add or -rm to remove a user!")
