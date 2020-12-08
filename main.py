@@ -1,11 +1,11 @@
-import weather_functions
-import csv_manager
+from weather_package.scripts import weather_functions
+from weather_package.scripts import csv_manager
 import argparse
 import dbmanager as db
 
-city_list_path="data/comuni_italiani.csv"
-db_path = 'data/database.db'
-results_path = 'data/outputs.csv'
+city_list_path="weather_package/data/comuni_italiani.csv"
+db_path = 'weather_package/data/database.db'
+results_path = 'weather_package/data/outputs.csv'
 
 
 def parse_arguments():
