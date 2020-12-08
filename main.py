@@ -5,6 +5,7 @@ import dbmanager as db
 
 city_list_path="data/comuni_italiani.csv"
 db_path = 'data/database.db'
+results_path = 'data/outputs.csv'
 
 
 def parse_arguments():
@@ -44,6 +45,7 @@ if __name__ == "__main__":
             api_key = db.get_api_key(args.u, args.p)
             if csv_manager.csv_city_check(city_list_path,args.city):
                 temps, lat, lon = weather_functions.min_max_day(api_key, args.city, args.country, args.day)
+                csv_manager.write_data(results_path,args.city, temps)
                 if args.quiet:
                     print (temps)
                 elif args.verbose:
