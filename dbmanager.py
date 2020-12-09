@@ -86,7 +86,7 @@ def display_all_users():
     conn.commit()
     results = rows.fetchall()
 
-    print("Users: ")
+    print("Users' list: ")
     for row in results:
         print(row[0])
 
@@ -128,7 +128,7 @@ def parse_arguments():
 
 
 if __name__ == "__main__":
-    path = 'Data/database.db'
+    path = 'weather_package/data/database.db'
     open_and_create(path)
     args = parse_arguments()
     # if the users wants to add and remove a user at the same time DENY
@@ -147,6 +147,6 @@ if __name__ == "__main__":
     elif args.ds:
         if args.u == "admin":
             if check_for_username(args.u, args.p):
-                display_all_users() 
+                display_all_users()
     else:
         print("Choose -add to add or -rm to remove a user!")

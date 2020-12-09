@@ -12,7 +12,7 @@ In Catania (Italy) the day 2020-12-04 , min temp is 10.1 ,max temp is 16.3 with 
 ```
 > **Note:** the project requires the following modules to run: *json, urllib, argparse, hashlib, random, os and squlite3*.
 
-A user can choose an Italian city and the day they need the forecast for. The input city is verified using a function which controls the presence of the chosen location from a csv file containing every Italian town. The input day is an integer with possible values between 1 and 16; it means we are searching for weather information for the n-day, counting from today (day=1 is today, day=2 is tomorrow, and so on).
+A user can choose an Italian city and the day they need the forecast for. The input city is verified using a function which controls the presence of the chosen location from a csv file containing every Italian town. The input day is an integer with possible values between 1 and 16; it means we are searching for weather information for the n-day, counting from today (day=1 is today, day=2 is tomorrow, and so on). Once a user has asked for a forecast, their information will be registered in a csv file named outputs.csv, along with the exact time they queried their request. This is done through an internal function in the csv_manager.py.
 
 ### Command line parameters :computer:
 In order to execute the ```main.py``` file, a few command line parameters must be passed.
@@ -42,16 +42,26 @@ Use the parameter ```-add```. Requires the following:
  - **-p:** password
  - **-a:** api key
 ```
-$ python dbmanager.py -add -u test -p test -a 749575cf5a244b2687a26c58849d521c
-Successfully inserted user test 
+$ python dbmanager.py -add -u admin -p admin -a 749575cf5a244b2687a26c58849d521c
+Successfully inserted user admin 
 ```
 
 #### Removing a user
 Use the parameter ```-rm```. Requires the following: 
  - **-u:** username 
 ```
-$ python dbmanager.py -rm -u test
-Successfully removed user test
+$ python dbmanager.py -rm -u admin
+Successfully removed user admin
+```
+
+#### Displaying all the users
+Use the parameter ```-ds```. Requires the following: 
+ - **-u:** username 
+ - **-p:** password
+```
+$ python dbmanager.py -ds -u admin -p admin
+Users' list:
+admin
 ```
 
 ### References :green_book:
