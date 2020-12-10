@@ -27,8 +27,8 @@ def read_store_user_data (results_path):
         print("File has a wrong encoding")
         return
 
-    print ("The last user launched the program on: ", str(user_data['datetime'].iloc[-1][0:20]),
-           "searching weather information for: ", str(user_data['city'].iloc[-1]))
+    print ("The last user launched the program on: ", str(user_data['datetime'].iloc[-1][0:19]),
+           ", searching weather information for: ", str(user_data['city'].iloc[-1]))
 
 if __name__ ==  "__main__":
     results_path = 'weather_package/data/outputs.csv'
