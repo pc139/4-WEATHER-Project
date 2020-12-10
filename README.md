@@ -1,6 +1,6 @@
 # 4-WEATHER-Project
 
-### Check the weather! :cloud: 
+### Check the weather! :partly_sunny: 
 
 In this repository you can find a file named ```main.py``` that triggers the Weatherbit.io Weather API, retrieving current weather observations from over 47,000 live weather stations, historical weather data for the past 10 years from the archive of more than 120,000 stations and highly localized weather forecasts for any point in the globe using the world's most trusted weather models!
 
