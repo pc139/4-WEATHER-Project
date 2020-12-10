@@ -64,6 +64,13 @@ Users' list:
 admin
 ```
 
+### Get last user query information
+Access datetime and city of the last user query to our program are provided by running:
+```
+$ python weather_package\scripts\csv_reader.py
+The last user launched the program on:  2020-12-08 18:02:58. searching weather information for:  Catania
+```
+
 ### References :green_book:
 The API we use is offered by [Weatherbit API](https://www.weatherbit.io/api). With a premium account there is the possibilty to use other specific features. 
 
