@@ -64,17 +64,17 @@ Users' list:
 admin
 ```
 
-### Get last user query information
+#### Get last user query information
 Access datetime and city of the last user query to our program are provided by running:
 ```
 $ python weather_package\scripts\csv_reader.py
-The last user launched the program on:  2020-12-08 18:02:58. searching weather information for:  Catania
+The last user launched the program on:  2020-12-10 22:45:11 , searching weather information for:  Milano
 ```
 
-### Testing csv_reader.py  :ballot_box_with_check:
+### Testing :ballot_box_with_check:
 Tests on parts of the code are provided here: weather_package/test/ .
 Here you can find a module named ```test_csv_reader.py```.
-To run them use: ```python3 -m unittest -v -b weather_package/tests/test_csv_reader.py```:
+To run them use: ```python -m unittest -v -b weather_package/tests/test_csv_reader.py```:
 
 ```
 test_empty_datafile (weather_package.tests.test_csv_reader.TestCSVReader) ... ok
@@ -85,7 +85,6 @@ test_no_datafile (weather_package.tests.test_csv_reader.TestCSVReader) ... ok
 Ran 3 tests in 0.040s
 
 OK
-
 ```
 
 ### References :green_book:
