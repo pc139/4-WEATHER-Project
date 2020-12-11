@@ -9,6 +9,8 @@ results_path = 'weather_package/data/outputs.csv'
 
 
 def parse_arguments():
+    """Parses all the arguments passed by the user"""
+    
     parser=argparse.ArgumentParser(
             description="Weather Forecast")
     parser.add_argument ("city", type=str,

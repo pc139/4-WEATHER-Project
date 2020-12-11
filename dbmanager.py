@@ -9,6 +9,12 @@ cursor = None
 
 
 def open_and_create(db_path):
+    """Check the existence of a sql database or create a new one containing
+    username, password, api key and salt, using username as primary key.
+
+    Keyword arguments:
+    path - Location of the database file
+    """
 
     global conn
     global cursor
@@ -27,6 +33,17 @@ def open_and_create(db_path):
 
 
 def create_new_user(username, password, api_key):
+    """Saves in the databse the:
+    - username
+    - digest (the hash of password + salt)
+    - api key
+    - salt (random number)
+
+    Keyword arguments:
+    username – The users’ username
+    password -- The  users’ password
+    api_key --- The users’ personal api key
+    """
 
     global conn
     global cursor
@@ -46,6 +63,11 @@ def create_new_user(username, password, api_key):
 
 
 def remove_username(username):
+    """Remove a user from the users table.
+
+    Keyword arguments:
+    username – The users’ username
+    """
 
     global conn
     global cursor
@@ -55,6 +77,12 @@ def remove_username(username):
 
 
 def check_for_username(username, password):
+    """Check the presence of the user username to log-in.
+
+    Key arguments:
+    username – The users’ username
+    password -- The  users’ password
+    """
 
     global conn
     global cursor
@@ -73,6 +101,12 @@ def check_for_username(username, password):
         return False
 
 def get_api_key(username, password):
+    """Find user api key.
+
+    Key arguments:
+    username – The users’ username
+    password -- The  users’ password
+    """
 
     global conn
     global cursor
@@ -84,6 +118,9 @@ def get_api_key(username, password):
     return api_key
 
 def display_all_users():
+    """Displays all the username for all the users.
+    This function is available only for admin user.
+	"""
 
     global conn
     global cursor
@@ -96,9 +133,10 @@ def display_all_users():
     return user_list
 
 def parse_arguments():
+    """Parses all the arguments passed by the user"""
 
     parser = argparse.ArgumentParser(
-            description="Manage actions as add/remove user",
+            description="Manage actions as add/remove/display user",
             prog="weather_info",
             usage="%(prog)s [options]",
             epilog="Using SQLite3")
