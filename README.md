@@ -14,6 +14,19 @@ In Catania (Italy) the day 2020-12-04 , min temp is 10.1 ,max temp is 16.3 with 
 
 A user can choose an Italian city and the day they need the forecast for. The input city is verified using a function which controls the presence of the chosen location from a csv file containing every Italian town. The input day is an integer with possible values between 1 and 16; it means we are searching for weather information for the n-day, counting from today (day=1 is today, day=2 is tomorrow, and so on). Once a user has asked for a forecast, their information will be registered in a csv file named outputs.csv, along with the exact time they queried their request. This is done through an internal function in the csv_manager.py.
 
+### Data Files :file_folder:
+The complete list of Italian towns names is stored in a csv file located in
+ ```weather_package/data/comuni_italiani.csv```. <br>
+This file contains the names of 7978 Italian towns. The following table represents the first five rows of our csv file
+ 
+|    id        |    comune             | istat   | provincia |
+|--------------|-----------------------|---------|-----------|
+|	 1         | Abano Terme           | 28001   | Padova    |
+|	 2         | Abbadia Cerreto       | 98001   | Lodi      |
+|	 3         | Abbadia Lariana       | 97001   | Lecco     |
+|	 4         | Abbadia San Salvatore | 52001   | Siena     |
+|	 5         | Abbasanta             | 95001   | Oristano  |
+
 ### Command line parameters :computer:
 In order to execute the ```main.py``` file, a few command line parameters must be passed.
 #### Positional arguments
