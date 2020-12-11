@@ -46,7 +46,7 @@ def write_data(path,city,temps):
         temps --- output string containing weather information, which appears to the user after they launch the main program
 
         """
-    
+
     try:
         open(path)
     except FileNotFoundError:

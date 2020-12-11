@@ -2,12 +2,9 @@ import pandas as pd
 import argparse
 
 def read_store_user_data (results_path):
+    """Create a pandas dataframe with information stored in the csv file located in result_path, handling some
+        exceptions errors. If this module is launched directly it prints some information about the last user query.
 
-    """Read the file containing users' queries, store it in a DataFrame
-    :param path: The path to the .csv file containing the information about the queries of all users
-    :type path: string
-    :return: the Dataframe containing users' queries
-    :rtype: Pandas.Dataframe
     """
 
     try:
