@@ -5,6 +5,7 @@ from weather_package.scripts.csv_reader import read_store_user_data
 
 
 class TestCSVReader(unittest.TestCase):
+
     """This class applies some unittest functionalities to
     the read_store_user_data function.
     """
@@ -15,7 +16,6 @@ class TestCSVReader(unittest.TestCase):
         self.temporary_file = 'temporary_file'
         f = open(self.temporary_file, 'w')
         f.close()
-
 
     def test_no_datafile(self):
         df = read_store_user_data('thisfiledoesnotexist')
@@ -34,5 +34,5 @@ class TestCSVReader(unittest.TestCase):
         os.remove(self.temporary_file)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main(verbosity=2)

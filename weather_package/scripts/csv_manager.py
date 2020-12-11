@@ -1,13 +1,14 @@
 import csv
 import datetime
 
+
 def csv_city_reader(path):
     """Open a csv reader, starting from the second row, as the first one
     is the header row.
     """
 
-    with  open(path, 'r',newline='') as f:
-        rows = [ line[1] for line in csv.reader(f, delimiter=',')]
+    with open(path, 'r', newline='') as f:
+        rows = [line[1] for line in csv.reader(f, delimiter=',')]
     return rows[1:]
 
 
@@ -30,14 +31,14 @@ def create_csv(path):
     datetime, city and forecast.
     """
 
-    with open(path, "w",newline='') as my_empty_csv:
-        columns = ['datetime','city','forecast']
+    with open(path, 'w', newline='') as my_empty_csv:
+        columns = ['datetime', 'city', 'forecast']
         writer = csv.writer(my_empty_csv)
         writer.writerow(columns)
     return my_empty_csv
 
 
-def write_data(path,city,temps):
+def write_data(path, city, temps):
     """Check whether there exists already a csv file located in path.
     If yes it opens the file, otherwise it creates a new csv file
     located in path. Then, it populates the csv file with the
@@ -57,10 +58,10 @@ def write_data(path,city,temps):
         create_csv(path)
 
     date = datetime.datetime.now()
-    fields=[date, city, temps]
-    with open(path, 'r',newline='') as f:
-        rows = [ line for line in csv.reader(f, delimiter=',')]
+    fields = [date, city, temps]
+    with open(path, 'r', newline='') as f:
+        rows = [line for line in csv.reader(f, delimiter=',')]
         if fields not in rows:
-            with open(path, 'a',newline='') as f:
+            with open(path, 'a', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(fields)

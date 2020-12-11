@@ -21,9 +21,9 @@ def open_and_create(db_path):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     try:
-        cursor.execute("SELECT * FROM users")
-    # if the table does not exist create one
+        cursor.execute('SELECT * FROM users')
     except sqlite3.OperationalError:
+        # if the table does not exist create one
         cursor.execute('''CREATE TABLE users
                        (username VARCHAR(255) NOT NULL,
                         password VARCHAR(255) NOT NULL,
@@ -53,13 +53,13 @@ def create_new_user(username, password, api_key):
         digest = str(salt) + password
         for i in range(1000000):
             digest = hashlib.sha512(digest.encode('utf-8')).hexdigest()
-            # if the user already exists, replace its password and salt
-        cursor.execute("INSERT OR REPLACE INTO users VALUES (?,?,?,?)",
-                   (username, digest, api_key, salt))
+        # if the user already exists, replace its password and salt
+        cursor.execute('INSERT OR REPLACE INTO users VALUES (?,?,?,?)',
+                       (username, digest, api_key, salt))
         conn.commit()
-        print("Successfully inserted user {}".format(username))
+        print ('Successfully inserted user {}'.format(username))
     else:
-        print('The username is not avaible, please choose another one!')
+        print ('The username is not avaible, please choose another one!')
 
 
 def remove_username(username):
@@ -72,7 +72,7 @@ def remove_username(username):
     global conn
     global cursor
     # the username is the primary key
-    cursor.execute("DELETE FROM users WHERE username = ?", (username,))
+    cursor.execute('DELETE FROM users WHERE username = ?', (username, ))
     conn.commit()
 
 
@@ -86,8 +86,8 @@ def check_for_username(username, password):
 
     global conn
     global cursor
-    rows = cursor.execute("SELECT * FROM users WHERE username=?",
-                          (username,))
+    rows = cursor.execute('SELECT * FROM users WHERE username=?',
+                          (username, ))
     conn.commit()
     results = rows.fetchall()
     # get the salt and prepend to the password before computing the digest
@@ -100,8 +100,9 @@ def check_for_username(username, password):
     else:
         return False
 
+
 def get_api_key(username, password):
-    """Find user api key.
+    """Find users' api key.
 
     Key arguments:
     username – The users’ username
@@ -110,21 +111,22 @@ def get_api_key(username, password):
 
     global conn
     global cursor
-    rows = cursor.execute("SELECT * FROM users WHERE username=?",
-                          (username,))
+    rows = cursor.execute('SELECT * FROM users WHERE username=?',
+                          (username, ))
     conn.commit()
     results = rows.fetchall()
     api_key = results[0][2]
     return api_key
 
+
 def display_all_users():
     """Displays all the username for all the users.
     This function is available only for admin user.
-	"""
+    """
 
     global conn
     global cursor
-    rows = cursor.execute("SELECT username FROM users")
+    rows = cursor.execute('SELECT username FROM users')
     conn.commit()
     user_list = []
     results = rows.fetchall()
@@ -132,65 +134,58 @@ def display_all_users():
         user_list += [row[0]]
     return user_list
 
+
 def parse_arguments():
     """Parses all the arguments passed by the user"""
 
-    parser = argparse.ArgumentParser(
-            description="Manage actions as add/remove/display user",
-            prog="weather_info",
-            usage="%(prog)s [options]",
-            epilog="Using SQLite3")
+    parser = argparse.ArgumentParser(description='Manage user actions',
+                                     prog='weather_info',
+                                     usage='%(prog)s [options]',
+                                     epilog='Using SQLite3')
     # command to add users
-    parser.add_argument("-add",
-                        help="Add user",
-                        required=False, default=False,
-                        action="store_true")
+    parser.add_argument('-add', help='Add user', required=False,
+                        default=False, action='store_true')
     # command to remove users
-    parser.add_argument("-rm",
-                        help="Remove user",
-                        required=False, default=False,
-                        action="store_true")
+    parser.add_argument('-rm', help='Remove user', required=False,
+                        default=False, action='store_true')
     # command to display all users
-    parser.add_argument("-ds",
-                        help="Display users",
-                        required=False, default=False,
-                        action="store_true")
+    parser.add_argument('-ds', help='Display users', required=False,
+                        default=False, action='store_true')
     # user credentials
-    parser.add_argument('-u', help="user username (requires -p)",
+    parser.add_argument('-u', help='user username (requires -p)',
                         required=True, default=None)
-    parser.add_argument('-p', help="user password",
-                        required=True, default=None)
-    parser.add_argument('-a', help="user api_key",
-                        required=False, default=None)
+    parser.add_argument('-p', help='user password', required=True,
+                        default=None)
+    parser.add_argument('-a', help='user api_key', required=False,
+                        default=None)
 
-    parser.add_argument("--version",
-                        action="version",
-                        version="%(prog)s 1.0")
+    parser.add_argument('--version', action='version',
+                        version='%(prog)s 1.0')
     args = parser.parse_args()
     return args
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     path = 'weather_package/data/database.db'
     open_and_create(path)
     args = parse_arguments()
     # if the users wants to add and remove a user at the same time DENY
     if args.add and args.rm:
-        print("It is not possible to add and remove a user at the same time!")
+        print ('It is not possible to add and remove a user at the same time!')
     elif args.add:
         # if there is one argument missing (username, password or both) DENY
         if args.u is None or args.p is None or args.a is None:
-            print("Something is missing, provide proper data!")
+            print ('Something is missing, provide proper data!')
         else:
             create_new_user(args.u, args.p, args.a)
     elif args.rm:
         remove_username(args.u)
-        print("Successfully removed user {}".format(args.u))
+        print ('Successfully removed user {}'.format(args.u))
     elif args.ds:
-        if args.u == "admin":
+        if args.u == 'admin':
             if check_for_username(args.u, args.p):
-                user_list=display_all_users()
-                print("Users' list: ")
-                print(user_list)
+                user_list = display_all_users()
+                print ("Users' list: ")
+                print (user_list)
     else:
-        print("Choose -add to add or -rm to remove a user!")
+        print ('Choose -add to add or -rm to remove a user!')
