@@ -30,14 +30,19 @@ def create_new_user(username, password, api_key):
 
     global conn
     global cursor
-    salt = random.randint(1, 100)
-    digest = str(salt) + password
-    for i in range(1000000):
-        digest = hashlib.sha512(digest.encode('utf-8')).hexdigest()
-    # if the user already exists, replace its password and salt
-    cursor.execute("INSERT OR REPLACE INTO users VALUES (?,?,?,?)",
+    user_list = display_all_users()
+    if username not in user_list:
+        salt = random.randint(1, 100)
+        digest = str(salt) + password
+        for i in range(1000000):
+            digest = hashlib.sha512(digest.encode('utf-8')).hexdigest()
+            # if the user already exists, replace its password and salt
+        cursor.execute("INSERT OR REPLACE INTO users VALUES (?,?,?,?)",
                    (username, digest, api_key, salt))
-    conn.commit()
+        conn.commit()
+        print("Successfully inserted user {}".format(username))
+    else:
+        print('The username is not avaible, please choose another one!')
 
 
 def remove_username(username):
@@ -84,11 +89,11 @@ def display_all_users():
     global cursor
     rows = cursor.execute("SELECT username FROM users")
     conn.commit()
+    user_list = []
     results = rows.fetchall()
-
-    print("Users' list: ")
     for row in results:
-        print(row[0])
+        user_list += [row[0]]
+    return user_list
 
 def parse_arguments():
 
@@ -140,13 +145,14 @@ if __name__ == "__main__":
             print("Something is missing, provide proper data!")
         else:
             create_new_user(args.u, args.p, args.a)
-            print("Successfully inserted user {}".format(args.u))
     elif args.rm:
         remove_username(args.u)
         print("Successfully removed user {}".format(args.u))
     elif args.ds:
         if args.u == "admin":
             if check_for_username(args.u, args.p):
-                display_all_users()
+                user_list=display_all_users()
+                print("Users' list: ")
+                print(user_list)
     else:
         print("Choose -add to add or -rm to remove a user!")

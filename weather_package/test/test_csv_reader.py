@@ -6,7 +6,7 @@ from weather_package.scripts.csv_reader import read_store_user_data
 
 class TestCSVReader(unittest.TestCase):
     """This class applies some unittest functionalities to the read_store_user_data function."""
-    
+
     # setUp function prepare some data for tests
     def setUp(self):
         # create an empty file
