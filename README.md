@@ -17,7 +17,7 @@ A user can choose an Italian city and the day they need the forecast for. The in
 ### Data Files :file_folder:
 The complete list of Italian towns names is stored in a csv file located in
  ```weather_package/data/comuni_italiani.csv```. <br>
-This file contains the names of 7978 Italian towns. The following table represents the first five rows of our csv file
+This file contains the names of 7978 Italian towns. The following table represents the first five rows of our csv file:
  
 |    id        |    comune             | istat   | provincia |
 |--------------|-----------------------|---------|-----------|
@@ -87,7 +87,7 @@ The last user launched the program on:  2020-12-10 22:45:11 , searching weather 
 ### Testing :ballot_box_with_check:
 Tests on parts of the code are provided here: weather_package/test/ .
 Here you can find a module named ```test_csv_reader.py```.
-To run them use: ```python -m unittest -v -b weather_package/test/test_csv_reader.py```:
+To run them use: ```python -m unittest -v -b weather_package/test/test_csv_reader.py```
 
 ```
 test_empty_datafile (weather_package.tests.test_csv_reader.TestCSVReader) ... ok
