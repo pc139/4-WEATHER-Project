@@ -80,7 +80,7 @@ def remove_username(username):
 
 
 def check_for_username(username, password):
-    """Check the presence of the user username to log-in.
+    """Check the credentials to log-in.
 
     Key arguments:
     username – The users’ username
