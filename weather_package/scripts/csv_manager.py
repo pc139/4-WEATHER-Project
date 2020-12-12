@@ -54,6 +54,7 @@ def write_data(path, city, temps):
 
     try:
         open(path)
+    # if a csv file in path does not exist create a new csv file in path
     except FileNotFoundError:
         create_csv(path)
 

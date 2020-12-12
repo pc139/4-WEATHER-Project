@@ -10,7 +10,7 @@ def read_store_user_data(results_path):
     """
 
     try:
-        # Storing information abount cities
+        # Storing information about towns in a pandas dataframe
         user_data = pd.read_csv(results_path, sep=',', header=0)
     except FileNotFoundError:
         print ('The file does not exist')

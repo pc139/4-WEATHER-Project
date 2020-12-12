@@ -18,14 +18,17 @@ class TestCSVReader(unittest.TestCase):
         f.close()
 
     def test_no_datafile(self):
+        # test function with a file that does not exist
         df = read_store_user_data('thisfiledoesnotexist')
         self.assertFalse(df)
 
     def test_empty_datafile(self):
+        # test the function with an the empty file we created before
         df = read_store_user_data(self.temporary_file)
         self.assertFalse(df)
 
     def test_file_is_not_csv(self):
+        # test the function with a file that is not a csv
         df = read_store_user_data(self.temporary_file)
         self.assertFalse(df)
 
