@@ -23,7 +23,7 @@ def open_and_create(db_path):
     try:
         cursor.execute('SELECT * FROM users')
     except sqlite3.OperationalError:
-        # if the table does not exist create one
+        # If the table does not exist we create one
         cursor.execute('''CREATE TABLE users
                        (username VARCHAR(255) NOT NULL,
                         password VARCHAR(255) NOT NULL,
@@ -48,12 +48,15 @@ def create_new_user(username, password, api_key):
     global conn
     global cursor
     user_list = display_all_users()
+    # Check if the username already exists
     if username not in user_list:
+        # Create a random salt
         salt = random.randint(1, 100)
         digest = str(salt) + password
+        # Compute the hash of the password n-times
         for i in range(1000000):
             digest = hashlib.sha512(digest.encode('utf-8')).hexdigest()
-        # if the user already exists, replace its password and salt
+        # Prepared statement to avoid sql injection
         cursor.execute('INSERT OR REPLACE INTO users VALUES (?,?,?,?)',
                        (username, digest, api_key, salt))
         conn.commit()
@@ -71,7 +74,7 @@ def remove_username(username):
 
     global conn
     global cursor
-    # the username is the primary key
+    # The username is the primary key
     cursor.execute('DELETE FROM users WHERE username = ?', (username, ))
     conn.commit()
 
@@ -86,15 +89,17 @@ def check_for_username(username, password):
 
     global conn
     global cursor
+    # Prepare statement to avoid sql injection
     rows = cursor.execute('SELECT * FROM users WHERE username=?',
                           (username, ))
     conn.commit()
     results = rows.fetchall()
-    # get the salt and prepend to the password before computing the digest
+    # Get the salt and prepend to the password before computing the digest
     digest = str(results[0][3]) + password
+    # Compute hash of the password
     for i in range(1000000):
         digest = hashlib.sha512(digest.encode('utf-8')).hexdigest()
-    # if the digest in the database is equal to the computed digest ALLOW
+    # If the digest in the database is equal to the computed digest ALLOW
     if digest == results[0][1].lower():
         return True
     else:
@@ -111,10 +116,12 @@ def get_api_key(username, password):
 
     global conn
     global cursor
+    # Prepare statement to avoid sql injection
     rows = cursor.execute('SELECT * FROM users WHERE username=?',
                           (username, ))
     conn.commit()
     results = rows.fetchall()
+    # Extract the api key
     api_key = results[0][2]
     return api_key
 
@@ -126,10 +133,12 @@ def display_all_users():
 
     global conn
     global cursor
+    # Prepare statement to avoid sql injection
     rows = cursor.execute('SELECT username FROM users')
     conn.commit()
     user_list = []
     results = rows.fetchall()
+    # Save all the users in a list
     for row in results:
         user_list += [row[0]]
     return user_list
@@ -169,11 +178,11 @@ if __name__ == '__main__':
     path = 'weather_package/data/database.db'
     open_and_create(path)
     args = parse_arguments()
-    # if the users wants to add and remove a user at the same time DENY
+    # Deny if the users wants to add and remove a user at the same time
     if args.add and args.rm:
         print ('It is not possible to add and remove a user at the same time!')
     elif args.add:
-        # if there is one argument missing (username, password or both) DENY
+        # Deny if there is one argument missing
         if args.u is None or args.p is None or args.a is None:
             print ('Something is missing, provide proper data!')
         else:

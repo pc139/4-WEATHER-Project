@@ -12,13 +12,17 @@ def parse_arguments():
     """Parses all the arguments passed by the user"""
 
     parser = argparse.ArgumentParser(description='Weather Forecast')
+    # Selection of the city
     parser.add_argument('city', type=str, help='Insert an Italian city'
                         , default=None)
+    # Selection of the country
     parser.add_argument('country', type=str, help='Input allowed: Italy'
                         , choices=['Italy'], default=None)
+    # Selection of the day
     parser.add_argument('day', type=int,
                         help='Allowed an integer number between 1 and 16'
                         , choices=range(1, 17), default=None)
+    # # User credentials
     parser.add_argument('-u', help='username name (requires -p)',
                         default=None)
     parser.add_argument('-p', help='username password', default=None)
@@ -26,6 +30,7 @@ def parse_arguments():
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-q', '--quiet', action='store_true',
                        help='print quiet')
+    # Selection of the level of verbosity
     group.add_argument('-v', '--verbose', action='store_true',
                        help='print verbose')
     args = parser.parse_args()
@@ -37,14 +42,17 @@ if __name__ == '__main__':
     # open the connection and (IF NECESSARY) create the users table
     db.open_and_create(db_path)
     args = parse_arguments()
-    # If the user is authenticated proceed:
     try:
+        # If the user is authenticated proceed:
         if db.check_for_username(args.u, args.p):
+            # Get personal api key
             api_key = db.get_api_key(args.u, args.p)
+            # Check validity of input
             if csv_manager.csv_city_check(city_list_path, args.city):
                 (temps, lat, lon) = \
                     weather_functions.min_max_day(api_key, args.city,
                         args.country, args.day)
+                # Save data into the csv file
                 csv_manager.write_data(results_path, args.city, temps)
                 if args.quiet:
                     print (temps)
