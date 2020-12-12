@@ -38,8 +38,7 @@ In order to execute the ```main.py``` file, a few command line parameters must b
 - **-h, --help**: displays all the possible options for each parameter; 
 - **-v**:  displays the output with different levels of verbosity (at the moment only one level of verbosity is supported);
 - **-u U [required]:** the username (requires *-p*).  
-- **-p P [required]:** the user's password.   
-- **--version:** show program's version number and exit.
+- **-p P [required]:** the user's password.
 
 ### How to populate the database :busts_in_silhouette:
 In order to run ```main.py``` you will need a **username** and a **password**. The package comes with a **default user** with the following credenentials:
