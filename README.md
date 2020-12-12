@@ -10,7 +10,7 @@ If you run the program, executing the main file with: ```$ python main.py "Catan
 $ python main.py "Catania" "Italy" 2 -u admin -p admin
 In Catania (Italy) the day 2020-12-04 , min temp is 10.1 ,max temp is 16.3 with scattered clouds
 ```
-> **Note:** the project requires the following modules to run: *json, urllib, argparse, hashlib, random, os and squlite3*.
+> **Note:** the project requires the following modules to run: *json, csv, pandas, datetime, unittest, urllib, argparse, hashlib, random, os, squlite3*.
 
 A user can choose an Italian city and the day they need the forecast for. The input city is verified using a function which controls the presence of the chosen location from a csv file containing every Italian town. The input day is an integer with possible values between 1 and 16; it means we are searching for weather information for the n-day, counting from today (day=1 is today, day=2 is tomorrow, and so on). Once a user has asked for a forecast, their information will be registered in a csv file named outputs.csv, along with the exact time they queried their request. This is done through an internal function in the csv_manager.py.
 
